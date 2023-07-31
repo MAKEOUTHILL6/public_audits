@@ -1,10 +1,11 @@
 # Sherlock <img src="https://audits.sherlock.xyz/_next/static/media/sherlock_logo.dc2b3290.svg" width=24 height=23.5>
 
 ### Audit Competitions
-| Contest | High risk | Medium risk | Security report | Unconfirmed Issues | Payout |
+| Contest | High risk | Medium risk | Low risk | Security report | Unconfirmed Issues | Payout |
 |:--:|:--:|:--:|:--:|:--:|:--:|:--:|
-| [TokenSoft](https://audits.sherlock.xyz/contests/100) | - highs | - medium | [Source](https://github.com/MAKEOUTHILL6/public_audits/blob/main/Contests/sherlock/Tokensoft.md) | 1 | - |
+| [TokenSoft](https://audits.sherlock.xyz/contests/100) | - high | - medium | [Source](https://github.com/MAKEOUTHILL6/public_audits/blob/main/Contests/sherlock/Tokensoft.md) | 1 | - |
 | [Perennial V2](https://audits.sherlock.xyz/contests/106) | - | - | - | - | - |
+| [Tokemak](https://audits.sherlock.xyz/contests/101) | - | - | - | - | - |
 
 # Code4rena <img src="https://code4rena.com/logos/c4-logo.svg" width=100 height=25>
 
