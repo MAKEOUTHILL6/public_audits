@@ -4,6 +4,6 @@
 
 | Project Name:                | Issues Found: |
 | ---------------------------- | ------------- |
-| Arcadexyz                    | 0             |
-| LybraFinance                 | 0             |
-| Tokensoft                    | 0             |
+| Arcadexyz                    | 2             |
+| LybraFinance                 | 5             |
+| Tokensoft                    | 1             |
