@@ -1,7 +1,7 @@
 # About 0xMAKEOUTHILL
 Bulgaria based blockchain security researcher. 🇧🇬
 
-# Sherlock <img src="https://audits.sherlock.xyz/_next/static/media/sherlock_logo.dc2b3290.svg" width=24 height=23.5>
+# Sherlock 
 
 ### Audit Competitions
 | Contest | High risk | Medium risk | Security report | Unconfirmed Issues | Payout |
@@ -10,7 +10,7 @@ Bulgaria based blockchain security researcher. 🇧🇬
 | [Perennial V2](https://audits.sherlock.xyz/contests/106) | - | - | - | - | - |
 | [Tokemak](https://audits.sherlock.xyz/contests/101) | - | - | - | - | - |
 
-# Code4rena <img src="https://code4rena.com/logos/c4-logo.svg" width=100 height=25>
+# Code4rena 
 
 ### Audit Competitions
 | Contest | High risk | Medium risk | Low risk | Security report | Unconfirmed Issues | Payout |
@@ -20,7 +20,7 @@ Bulgaria based blockchain security researcher. 🇧🇬
 | [Good Entry](https://code4rena.com/contests/2023-08-good-entry#top) | - | - | - | - | - | - |
 | [Chainlink Staking](https://code4rena.com/contests/2023-08-chainlink-staking-v02#top) | - | - | - | - | - | - |
 
-# CodeHawks <img src="https://res.cloudinary.com/droqoz7lg/image/upload/v1689080263/snhkgvtsidryjdtx0pce.png" width=50 height=27>
+# CodeHawks 
 
 ### Audit Competitions
 | Contest | High risk | Medium risk | Low risk | Security report | Unconfirmed Issues | Payout |
@@ -29,7 +29,7 @@ Bulgaria based blockchain security researcher. 🇧🇬
 | [Escrow](https://www.codehawks.com/contests/cljyfxlc40003jq082s0wemya) | - | - | - | - | - | - |
 | [Beedle](https://www.codehawks.com/contests/clkbo1fa20009jr08nyyf9wbx) | - | - | - | - | - | - |
 
-# Immunefi <img src="https://immunefi.com/images/logo-white.svg" width=100 height=25>
+# Immunefi 
 
 ### Bug bounties
 | Project | Severity | Security Report | Payout | Status |
