@@ -2,8 +2,8 @@
 Bulgaria based blockchain security researcher. 🇧🇬
 
 # Note :
-Findings from **sherlock** will be added after judging contest ends.
-Findings from **code4rena** will be added after a contest's end.
+<br/>Findings from **sherlock** will be added after judging contest ends.
+<br/>Findings from **code4rena** will be added after a contest's end.
 Findings will be added in the **Unconfirmed Issues** section until their severity is officialy revealed by the corresponding platform.
 
 # Sherlock 
