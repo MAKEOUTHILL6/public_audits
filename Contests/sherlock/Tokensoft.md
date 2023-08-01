@@ -1,86 +1,180 @@
-# Introduction
+![](https://audits.sherlock.xyz/_next/image?url=https%3A%2F%2Fsherlock-files.ams3.digitaloceanspaces.com%2Fcontests%2Ftokensoft.jpg&w=96&q=75)
 
-A time-boxed security review of the **protocol name** protocol was done by **MAKEOUTHILL**, with a focus on the security aspects of the application's implementation.
+# [Tokensoft](https://audits.sherlock.xyz/contests/100)
 
-# Disclaimer
+| Protocol | Contest Pot | nSLOC | Length | Start | End |
+|:--:|:--:|:--:|:--:|:--:|:--:|
+| Tokensoft | 14,000 USDC | 650 | 4  days | Jul 17 2023 | Jul 21 2023 |
 
-A smart contract security review can never verify the complete absence of vulnerabilities. This is a time, resource and expertise bound effort where I try to find as many vulnerabilities as possible. I can not guarantee 100% security after the review or even if the review will find any problems with your smart contracts. Subsequent security reviews, bug bounty programs and on-chain monitoring are strongly recommended.
+## Issues found :
 
-## Security Interview
+| Severity | Title |
+|:--|:--:|
+| Unconfirmed | Loss of funds during user adjusting. |
 
-**Q:** What in the protocol has value in the market?
+# 1. Loss of funds during user adjusting.
 
-**A:**
 
-**Q:** What is the worst thing that can happen to the protocol?
+Summary
+Adjusting a user's total claimable value not working correctly
 
-**A:**
+Vulnerability Detail
+Whenever the owner is adjusting user's total claimable value, the records[beneficiary].total is decreased or increased by uint256 diff = uint256(amount > 0 ? amount : -amount);.
 
-**Q:** In what case can the protocol/users lose money?
+However some assumptions made are not correct. Scenario:
 
-**A:**
+User has bought 200 FOO tokens for example.
+In PriceTierVestingSale_2_0.sol he calls the initializeDistributionRecord which sets his records[beneficiary].total to the purchased amount || 200. So records[beneficiary].total = 200
+After that the owner decides to adjust his records[beneficiary].total to 300. So records[beneficiary].total = 300
+User decides to claim his claimable amount which should be equal to 300. He calls the claim function in PriceTierVestingSale_2_0.sol.
+function claim(
+    address beneficiary // the address that will receive tokens
+  ) external validSaleParticipant(beneficiary) nonReentrant {
+    uint256 claimableAmount = getClaimableAmount(beneficiary);
+    uint256 purchasedAmount = getPurchasedAmount(beneficiary);
 
-## Potential attacker's goals
+    // effects
+    uint256 claimedAmount = super._executeClaim(beneficiary, purchasedAmount);
 
-## Potential ways for the attacker to achieve his goals
+    // interactions
+    super._settleClaim(beneficiary, claimedAmount);
+  }
+As we can see here the _executeClaim is called with the purchasedAmount of the user which is still 200.
 
-- value transfer functions
-- incorrect input from `external` methods with no access control
-- incorrect input from external calls to other smart contracts
-- calling contract functions in weird sequences
+function _executeClaim(
+    address beneficiary,
+    uint256 _totalAmount
+  ) internal virtual returns (uint256) {
+    uint120 totalAmount = uint120(_totalAmount);
 
-# Severity classification
+    // effects
+    if (records[beneficiary].total != totalAmount) {
+      // re-initialize if the total has been updated
+      _initializeDistributionRecord(beneficiary, totalAmount);
+    }
+    
+    uint120 claimableAmount = uint120(getClaimableAmount(beneficiary));
+    require(claimableAmount > 0, 'Distributor: no more tokens claimable right now');
 
-| Severity               | Impact: High | Impact: Medium | Impact: Low |
-| ---------------------- | ------------ | -------------- | ----------- |
-| **Likelihood: High**   | Critical     | High           | Medium      |
-| **Likelihood: Medium** | High         | Medium         | Low         |
-| **Likelihood: Low**    | Medium       | Low            | Low         |
+    records[beneficiary].claimed += claimableAmount;
+    claimed += claimableAmount;
 
-**Impact** - the technical, economic and reputation damage of a successful attack
+    return claimableAmount;
+  }
+Now check the if statement:
 
-**Likelihood** - the chance that a particular vulnerability gets discovered and exploited
+ if (records[beneficiary].total != totalAmount) {
+      // re-initialize if the total has been updated
+      _initializeDistributionRecord(beneficiary, totalAmount);
+    }
+The point of this is if the total of the user has been adjusted, to re-initialize to the corresponding amount, but since it's updated by the input value which is 200, records[beneficiary].total = 200 , the user will lose the 100 added from the owner during the adjust
 
-**Severity** - the overall criticality of the risk
+Impact
+Loss of funds for the user and the protocol
 
-# Security Assessment Summary
+Code Snippet
+2023-06-tokensoft-MAKEOUTHILL6/contracts/contracts/claim/PriceTierVestingSale_2_0.sol
 
-### Scope 
+Lines 75 to 109 in 644d289
 
-The following smart contracts were in scope of the audit:
+   function getPurchasedAmount(address buyer) public view returns (uint256) { 
+     /** 
+     Get the quantity purchased from the sale and convert it to native tokens 
+    
+     Example: if a user buys $1.11 of a FOO token worth $0.50 each, the purchased amount will be 2.22 FOO 
+     - buyer total: 111000000 ($1.11 with 8 decimals) 
+     - decimals: 6 (the token being purchased has 6 decimals) 
+     - price: 50000000 ($0.50 with 8 decimals) 
+  
+     Calculation: 111000000 * 1000000 / 50000000 
+  
+     Returns purchased amount: 2220000 (2.22 with 6 decimals) 
+     */ 
+     return (sale.buyerTotal(buyer) * (10 ** soldTokenDecimals)) / price; 
+   } 
+  
+   function initializeDistributionRecord( 
+     address beneficiary // the address that will receive tokens 
+   ) external validSaleParticipant(beneficiary) { 
+     _initializeDistributionRecord(beneficiary, getPurchasedAmount(beneficiary)); 
+   } 
+  
+   function claim( 
+     address beneficiary // the address that will receive tokens 
+   ) external validSaleParticipant(beneficiary) nonReentrant { 
+     uint256 claimableAmount = getClaimableAmount(beneficiary); 
+     uint256 purchasedAmount = getPurchasedAmount(beneficiary); 
+  
+     // effects 
+     uint256 claimedAmount = super._executeClaim(beneficiary, purchasedAmount); 
+  
+     // interactions 
+     super._settleClaim(beneficiary, claimedAmount); 
+   } 
+  
+2023-06-tokensoft-MAKEOUTHILL6/contracts/contracts/claim/abstract/AdvancedDistributor.sol
 
-- `SmartContractName` (url)
-- `SmartContractName`
+Lines 105 to 131 in 644d289
 
-The following number of issues were found, categorized by their severity:
+ function adjust(address beneficiary, int256 amount) external onlyOwner { 
+   DistributionRecord memory distributionRecord = records[beneficiary]; 
+   require(distributionRecord.initialized, 'must initialize before adjusting'); 
+  
+   uint256 diff = uint256(amount > 0 ? amount : -amount); 
+   require(diff < type(uint120).max, 'adjustment > max uint120'); 
+  
+   if (amount < 0) { 
+     // decreasing claimable tokens 
+     require(total >= diff, 'decrease greater than distributor total'); 
+     require(distributionRecord.total >= diff, 'decrease greater than distributionRecord total'); 
+     total -= diff; 
+     records[beneficiary].total -= uint120(diff); 
+     token.safeTransfer(owner(), diff); 
+     // reduce voting power 
+     _burn(beneficiary, tokensToVotes(diff)); 
+   } else { 
+     // increasing claimable tokens 
+     total += diff; 
+     records[beneficiary].total += uint120(diff); 
+     // increase voting pwoer 
+     _mint(beneficiary, tokensToVotes(diff)); 
+   } 
+  
+   emit Adjust(beneficiary, amount); 
+ } 
+  
+2023-06-tokensoft-MAKEOUTHILL6/contracts/contracts/claim/abstract/Distributor.sol
 
-- Critical & High: x issues
-- Medium: x issues
-- Low: x issues
-- Informational: x issues
+Lines 66 to 84 in 644d289
 
----
+ function _executeClaim( 
+   address beneficiary, 
+   uint256 _totalAmount 
+ ) internal virtual returns (uint256) { 
+   uint120 totalAmount = uint120(_totalAmount); 
+  
+   // effects 
+   if (records[beneficiary].total != totalAmount) { 
+     // re-initialize if the total has been updated 
+     _initializeDistributionRecord(beneficiary, totalAmount); 
+   } 
+    
+   uint120 claimableAmount = uint120(getClaimableAmount(beneficiary)); 
+   require(claimableAmount > 0, 'Distributor: no more tokens claimable right now'); 
+  
+   records[beneficiary].claimed += claimableAmount; 
+   claimed += claimableAmount; 
+  
+   return claimableAmount; 
+Tool used
+Manual Review
 
-# Findings Summary
+Recommendation
+I am not sure if it is enough to just set it the following way:
 
-| ID     | Title                        | Severity      |
-| ------ | ---------------------------- | ------------- |
-| [C-01] | Any Critical Title Here      | Critical      |
-| [H-01] | Any High Title Here          | High          |
-| [M-01] | Any Medium Title Here        | Medium        |
-| [L-01] | Any Low Title Here           | Low           |
-| [I-01] | Any Informational Title Here | Informational |
-
-# Detailed Findings
-
-# [S-01] {name}
-
-## Severity
-
-**Impact:**
-
-**Likelihood:**
-
-## Description
-
-## Recommendations
+ if (records[beneficiary].total != totalAmount) {
+      // re-initialize if the total has been updated
+      `--` _initializeDistributionRecord(beneficiary, totalAmount);
+     `++` _initializeDistributionRecord(beneficiary, records[beneficiary].total);
+    }
+Think of different scenarios if it is done that way and also keep in mind that the same holds for the decrease of records[beneficiary].total by adjust
