@@ -1,5 +1,5 @@
 # About 0xMAKEOUTHILL
-Bulgaria based blockchain security researcher. 🇧🇬
+Bulgarian based blockchain security researcher. 🇧🇬
 
 # Note :
 <br/>Findings from **sherlock** will be added after judging contest ends.
