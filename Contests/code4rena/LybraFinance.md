@@ -4,7 +4,7 @@
 
 | Protocol | Contest Pot | nSLOC | Length | Start | End |
 |:--:|:--:|:--:|:--:|:--:|:--:|
-| Lybra Finance | 60,500 USDC | 1680 | 7  days | 23 Jun 2023 | 3 Jul 2023 |
+| Lybra Finance | 60,500 USDC | 1680 | 10  days | 23 Jun 2023 | 3 Jul 2023 |
 
 ## Issues found :
 
