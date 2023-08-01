@@ -4,7 +4,7 @@
 
 | Protocol | Contest Pot | nSLOC | Length | Start | End |
 |:--:|:--:|:--:|:--:|:--:|:--:|
-| Tokensoft | 14,000 USDC | 650 | 4  days | Jul 17 2023 | Jul 21 2023 |
+| Tokensoft | 21,000 USDC | 650 | 4  days | Jul 17 2023 | Jul 21 2023 |
 
 ## Issues found :
 
