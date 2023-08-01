@@ -18,6 +18,67 @@
 Summary
 Adjusting a user's total claimable value not working correctly
 
+Summary
+Adjusting a user's total claimable value not working correctly
+
+Vulnerability Detail
+Whenever the owner is adjusting user's total claimable value, the records[beneficiary].total is decreased or increased by uint256 diff = uint256(amount > 0 ? amount : -amount);.
+
+However some assumptions made are not correct. Scenario:
+
+User has bought 200 FOO tokens for example.
+In PriceTierVestingSale_2_0.sol he calls the initializeDistributionRecord which sets his records[beneficiary].total to the purchased amount || 200. So records[beneficiary].total = 200
+After that the owner decides to adjust his records[beneficiary].total to 300. So records[beneficiary].total = 300
+User decides to claim his claimable amount which should be equal to 300. He calls the claim function in PriceTierVestingSale_2_0.sol.
+function claim(
+    address beneficiary // the address that will receive tokens
+  ) external validSaleParticipant(beneficiary) nonReentrant {
+    uint256 claimableAmount = getClaimableAmount(beneficiary);
+    uint256 purchasedAmount = getPurchasedAmount(beneficiary);
+
+    // effects
+    uint256 claimedAmount = super._executeClaim(beneficiary, purchasedAmount);
+
+    // interactions
+    super._settleClaim(beneficiary, claimedAmount);
+  }
+As we can see here the _executeClaim is called with the purchasedAmount of the user which is still 200.
+
+function _executeClaim(
+    address beneficiary,
+    uint256 _totalAmount
+  ) internal virtual returns (uint256) {
+    uint120 totalAmount = uint120(_totalAmount);
+
+    // effects
+    if (records[beneficiary].total != totalAmount) {
+      // re-initialize if the total has been updated
+      _initializeDistributionRecord(beneficiary, totalAmount);
+    }
+    
+    uint120 claimableAmount = uint120(getClaimableAmount(beneficiary));
+    require(claimableAmount > 0, 'Distributor: no more tokens claimable right now');
+
+    records[beneficiary].claimed += claimableAmount;
+    claimed += claimableAmount;
+
+    return claimableAmount;
+  }
+Now check the if statement:
+
+ if (records[beneficiary].total != totalAmount) {
+      // re-initialize if the total has been updated
+      _initializeDistributionRecord(beneficiary, totalAmount);
+    }
+The point of this is if the total of the user has been adjusted, to re-initialize to the corresponding amount, but since it's updated by the input value which is 200, records[beneficiary].total = 200 , the user will lose the 100 added from the owner during the adjust
+
+Impact
+Loss of funds for the user and the protocol
+
+
+Summary
+Adjusting a user's total claimable value not working correctly
+
 Vulnerability Detail
 Whenever the owner is adjusting user's total claimable value, the records[beneficiary].total is decreased or increased by uint256 diff = uint256(amount > 0 ? amount : -amount);.
 
@@ -166,6 +227,7 @@ Lines 66 to 84 in 644d289
    claimed += claimableAmount; 
   
    return claimableAmount; 
+   
 Tool used
 Manual Review
 
@@ -178,3 +240,4 @@ I am not sure if it is enough to just set it the following way:
      `++` _initializeDistributionRecord(beneficiary, records[beneficiary].total);
     }
 Think of different scenarios if it is done that way and also keep in mind that the same holds for the decrease of records[beneficiary].total by adjust
+
