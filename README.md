@@ -20,7 +20,8 @@ Bulgarian based blockchain security researcher. 🇧🇬
 ### Audit Competitions
 | Contest | High risk | Medium risk | Low risk | Security report | Unconfirmed Issues | Payout |
 |:--:|:--:|:--:|:--:|:--:|:--:|:--:|
-| [Arcadexyz](https://code4rena.com/contests/2023-07-arcadexyz#top) | - high | - medium | - low | [Source](https://github.com/MAKEOUTHILL6/public_audits/blob/main/Contests/code4rena/Arcadexyz.md) | 5 | - |
+| [Arcadexyz](https://code4rena.com/contests/2023-07-arcadexyz#top) | - high | - medium | - low | [Source](https://github.com/MAKEOUTHILL6/public_audits/blob/main/Contests/code4rena/Arcadexyz.md) | 2 | - |
+| [LybraFinance](https://code4rena.com/contests/2023-06-lybra-finance#top) | - high | - medium | - low | [Source](https://github.com/MAKEOUTHILL6/public_audits/blob/main/Contests/code4rena/LybraFinance.md) | 5 | - |
 | [Tangible](https://code4rena.com/contests/2023-08-tangible#top) | - | - | - | - | - | - |
 | [Good Entry](https://code4rena.com/contests/2023-08-good-entry#top) | - | - | - | - | - | - |
 | [Chainlink Staking](https://code4rena.com/contests/2023-08-chainlink-staking-v02#top) | - | - | - | - | - | - |
