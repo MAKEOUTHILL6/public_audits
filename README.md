@@ -12,7 +12,7 @@ Bulgarian based blockchain security researcher. 🇧🇬
 | Contest | High risk | Medium risk | Security report | Unconfirmed Issues | Payout |
 |:--:|:--:|:--:|:--:|:--:|:--:|
 | [TokenSoft](https://audits.sherlock.xyz/contests/100) | - | 1 medium | [Source](https://github.com/MAKEOUTHILL6/public_audits/blob/main/Contests/sherlock/Tokensoft.md) | - | $1,627.94 |
-| [Cooler Update](https://audits.sherlock.xyz/contests/107) | 1 high | - | - | - | $170.91 |
+| [Cooler Update](https://audits.sherlock.xyz/contests/107) | 1 high | - | [Source](https://github.com/MAKEOUTHILL6/public_audits/blob/main/Contests/sherlock/CoolerUpdate.md) | - | $170.91 |
 | [AlloV2](https://audits.sherlock.xyz/contests/101) | - high | - medium | - | 7 | - |
 
 # Code4rena 
