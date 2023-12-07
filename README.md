@@ -34,4 +34,4 @@ Bulgarian based blockchain security researcher. 🇧🇬
 ### Bug bounties
 | Project | Severity | Security Report | Payout | Status |
 |:--:|:--:|:--:|:--:|:--:|
-| - | - | - | - | - |
+| Arkham | Critical | - | - | Duplicate |
