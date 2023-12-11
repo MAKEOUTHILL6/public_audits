@@ -1,6 +1,6 @@
 # About 0xMAKEOUTHILL
 
-# Will begin adding contest findings soon...
+# Will update contest findings soon...
 
 Bulgarian based blockchain security researcher. 🇧🇬
 
