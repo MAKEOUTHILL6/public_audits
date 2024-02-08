@@ -10,7 +10,7 @@
 
 | Severity | Title |
 |:--|:--:|
-| Unconfirmed | Loss of funds during user adjusting. |
+| Medium | Loss of funds during user adjusting. |
 
 # 1. Loss of funds during user adjusting.
 # Summary
