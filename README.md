@@ -14,6 +14,8 @@ Bulgarian based blockchain security researcher. 🇧🇬
 | [TokenSoft](https://audits.sherlock.xyz/contests/100) | - | 1 medium | [Source](https://github.com/MAKEOUTHILL6/public_audits/blob/main/Contests/sherlock/Tokensoft.md) |
 | [Cooler Update](https://audits.sherlock.xyz/contests/107) | 1 high | - | [Source](https://github.com/MAKEOUTHILL6/public_audits/blob/main/Contests/sherlock/CoolerUpdate.md) |
 | [AlloV2](https://audits.sherlock.xyz/contests/109) | 1 high | 1 medium | [Source](https://github.com/MAKEOUTHILL6/public_audits/blob/main/Contests/sherlock/AlloV2.md) |
+| [RealWagmi #2](https://audits.sherlock.xyz/contests/118) | 1 high | - | [Source](https://github.com/MAKEOUTHILL6/public_audits/blob/main/Contests/sherlock/RealWagmi%20%232.md) |
+| [LooksRare Yolo](https://audits.sherlock.xyz/contests/163) | 1 high | 1 medium | [Source](https://github.com/MAKEOUTHILL6/public_audits/blob/main/Contests/sherlock/LooksRare%20Yolo.md) |
 
 # Code4rena 
 
