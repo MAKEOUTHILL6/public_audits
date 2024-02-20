@@ -22,7 +22,8 @@ Bulgarian based blockchain security researcher. 🇧🇬
 ### Audit Competitions
 | Contest | High risk | Medium risk | Low risk | Security report |
 |:--:|:--:|:--:|:--:|:--:|
-| - | - | - | - | - |
+| [Curves](https://code4rena.com/audits/2024-01-curves#top) | 3 highs | - | 2 lows | [Source](https://github.com/MAKEOUTHILL6/public_audits/blob/main/Contests/code4rena/Curves.md) |
+| [NextGen](https://code4rena.com/reports/2023-10-nextgen) | 1 high | 1 medium | - | [Source](https://github.com/MAKEOUTHILL6/public_audits/blob/main/Contests/code4rena/NextGen.md) |
 
 # CodeHawks 
 
